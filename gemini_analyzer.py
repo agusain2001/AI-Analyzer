@@ -13,9 +13,9 @@ class GeminiAnalyzer:
     def _generate_content(self, prompt: str, temperature: float = 0.3) -> str:
         """Generate content using Gemini API"""
         try:
-            # Sanitize prompt to remove problematic characters if necessary
-            # This helps with UnicodeEncodeError on some Windows environments
-            safe_prompt = prompt.encode('utf-8', 'ignore').decode('utf-8')
+            # Aggressively sanitize prompt to remove non-ASCII characters
+            # This resolves UnicodeEncodeError: 'ascii' codec can't encode character...
+            safe_prompt = prompt.encode('ascii', 'ignore').decode('ascii')
             
             response = self.client.models.generate_content(
                 model=self.model,
@@ -30,7 +30,10 @@ class GeminiAnalyzer:
             return response.text
         except Exception as e:
             # Safe printing of error
-            error_msg = str(e).encode('utf-8', 'ignore').decode('utf-8')
+            try:
+                error_msg = str(e).encode('ascii', 'ignore').decode('ascii')
+            except:
+                error_msg = "Unknown error (encoding failed)"
             print(f"Gemini API error: {error_msg}")
             return ""
     
