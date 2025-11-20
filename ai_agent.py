@@ -1,4 +1,4 @@
-import json
+﻿import json
 import os
 import sys
 from datetime import datetime
@@ -32,17 +32,17 @@ class UniversalCreditAIAgent:
         # Task 1: Extract Text
         print("Task 1: Extracting text from PDF...")
         extraction_result = self.pdf_extractor.extract()
-        print(f"✓ Extracted {extraction_result['length']} characters\n")
+        print(f" Extracted {extraction_result['length']} characters\n")
         
         # Task 2: Summarize
         print("Task 2: Generating summary...")
         summary = self.analyzer.summarize_act(extraction_result['cleaned_text'])
-        print(f"✓ Generated {len(summary)} bullet points\n")
+        print(f" Generated {len(summary)} bullet points\n")
         
         # Task 3: Extract Key Sections
         print("Task 3: Extracting key legislative sections...")
         key_sections = self.analyzer.extract_key_sections(extraction_result['cleaned_text'])
-        print(f"✓ Extracted {len(key_sections)} key sections\n")
+        print(f" Extracted {len(key_sections)} key sections\n")
         
         # Task 4: Rule Checks
         print("Task 4: Applying 6 rule checks...")
@@ -50,7 +50,7 @@ class UniversalCreditAIAgent:
             extraction_result['cleaned_text'],
             key_sections
         )
-        print(f"✓ Completed {len(rule_checks)} rule checks\n")
+        print(f" Completed {len(rule_checks)} rule checks\n")
         
         # Compile results
         results = {
